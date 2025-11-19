@@ -1,6 +1,5 @@
-% adapted Philippe Dreuw and Thomas Deselaers
-% further adapted from edits by James Malcolm
-% finally, Shawn Lankton made some edits (www.shawnlankton.com)
+% Beamertheme for SPIRE Lab posters
+% Based on work by Philippe Dreuw, Thomas Deselaers, James Malcolm, Shawn Lankton
 
 \ProvidesPackage{beamerthemeLankton}
 
@@ -8,237 +7,125 @@
 \mode<presentation>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{butter}{rgb}{0.98824, 0.91373, 0.30980}		% #fce94f
-\definecolor{orange}{rgb}{0.98824, 0.68627, 0.24314}		% #fcaf3e
-\definecolor{spire1}{rgb}{0.9412,   0.6078,    0.2824}
+% -------------------------------------------------------
+% Colors
+% -------------------------------------------------------
+\definecolor{butter}{rgb}{0.98824, 0.91373, 0.30980}
+\definecolor{orange}{rgb}{0.98824, 0.68627, 0.24314}
+\definecolor{spire1}{rgb}{0.9412, 0.6078, 0.2824}
 
-% DEFINE COLORS
-%dark colors
+% Dark colors
 \definecolor{burntumber}{rgb}{0.54, 0.2, 0.14}
-\definecolor{sienna}{rgb}{0.53, 0.18, 0.09} 
+\definecolor{sienna}{rgb}{0.53, 0.18, 0.09}
 \definecolor{rosewood}{rgb}{0.4, 0.0, 0.04}
-% light colors
+
+% Light colors
 \definecolor{burlywood}{rgb}{0.87, 0.72, 0.53}
 \definecolor{mahogany}{rgb}{0.75, 0.25, 0.0}
-
 \definecolor{bronze}{rgb}{0.8, 0.5, 0.2}
-
-% \definecolor{light_salmon}{1.burlywodd250000,    0.6275,    0.4784}
 
 \setlength{\itemindent}{50pt}
 
-
+% Bullet using SPIRE logo
 \newcommand*{\upbullet}{\includegraphics[width=0.5em]{spire_logo_bullet_transparent.png}}
-% \setbeamertemplate{itemize item}{\upbullet}
-
 \setbeamertemplate{itemize item}{\raisebox{0.1ex}{\upbullet}\hskip0.1em}
-\setbeamercolor{headline}{bg=burlywood!25}% mahogany
 
+% Basic color setup
+\setbeamercolor{headline}{bg=burlywood!25}
 \setbeamercolor{title in headline}{fg=mahogany}
-
-\setbeamertemplate{blocks}[rounded][shadow=false]
-
 \setbeamercolor{structure}{fg=burntumber}
 \setbeamercolor{title}{bg=burntumber,fg=white}
-% \setbeamercolor{title in headline}{bg=burntumber,fg=white}
-% \setbeamercolor{section in head/foot}{bg=burlywood!60}
-% \setbeamercolor{frametitle}{fg=sienna,bg=burlywood!60}
-% \setbeamercolor{block body}{bg=white}
- \setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{background canvas}{bg=white}
 \setbeamercolor{block body}{bg=burlywood!25}
-%  \setbeamercolor{background canvas}{bg=burlywood!25}
-% \setbeamercolor{section in head/foot}{fg=black}
 \setbeamercolor{normal text}{fg=rosewood}
-\setbeamercolor{author in head/foot}{fg=white,bg=burntumber}%mahogany!40
+\setbeamercolor{author in head/foot}{fg=white,bg=burntumber}
 \setbeamercolor{block title}{bg=mahogany!40,fg=burntumber,series=\sc\bf}
 \setbeamercolor{{lower separation line head}}{mahogany}
-
 \setbeamercolor{author in headline}{fg=mahogany}
-
-% \setlength{\itemsep}{\fill}
-% \setbeamercolor{headline}{bg=black}
-% \setbeamercolor{footline}{bg=black}
-% \setbeamerfont{footline}{size=\large}
 \setbeamercolor{separation line}{bg=burntumber}
-% % \setbeamercolor{title in headline}{fg=butter}
-% \setbeamercolor{author in headline}{fg=orange}
 \setbeamercolor{institute in headline}{fg=mahogany}
-% 
-% \setbeamercolor{framesubtitle}{fg=blue, bg=gray}
-% \setbeamercolor{author in head/foot}{fg=orange,bg=black}
-% \setbeamercolor{title in head/foot}{fg=butter,bg=black}
 \setbeamercolor{website in footline}{fg=white}
 \setbeamercolor{email in footline}{fg=white}
-% 
-% \setbeamercolor*{normal text}{fg=black, bg=white}
-% \setbeamercolor*{block body}{fg=black,bg=white}
-% \setbeamercolor*{block title}{fg=black,bg=lightgray}
-% \setbeamerfont{block title}{size=\large,series=\sc\bf}
 \setbeamercolor{upper separation line head}{fg=burntumber}
 
-% \setbeamertemplate{blocks}[rounded][shadow=true]
-
-% \setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{blocks}[rounded][shadow=false]
 \setbeamertemplate{navigation symbols}{}  % no navigation on a poster
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------------------------------
+% Block appearance
+% -------------------------------------------------------
 \setbeamertemplate{block begin}{
   \vskip.5ex
-  \begin{beamercolorbox}[rounded=true,shadow=false,center,colsep*=.5ex]{block title}%leftskip=1ex
+  \begin{beamercolorbox}[rounded=true,shadow=false,center,colsep*=.5ex]{block title}
     \usebeamerfont*{block title}{\Large \textbf \insertblocktitle}
   \end{beamercolorbox}%
   {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body}%
   \begin{beamercolorbox}[rounded=true,shadow=false,colsep*=.5ex,sep=.5ex,vmode]{block body}%
     \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.5ex}\vbox{}%
-  }
-  \setbeamertemplate{block end}{
+}
+\setbeamertemplate{block end}{
   \end{beamercolorbox}
 }
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------------------------------
+% Header: IISc + SPIRE (left) — Title block (center) — ASRU (right)
+% -------------------------------------------------------
 \setbeamertemplate{headline}{
- \begin{beamercolorbox}[wd=\paperwidth]{upper separation line head}
+
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line head}
     \rule{0pt}{10pt}
   \end{beamercolorbox}
-  \leavevmode
-% 
-%   \begin{beamercolorbox}[wd=\paperwidth]{headline}
-%     \begin{columns}[T]
-%           \begin{column}{.1\paperwidth}
-% %         \centering
-% 	  \raggedright 
-%         \vskip2ex
-%         \hspace{15mm}
-% %         \includegraphics[height=0.1\paperwidth]{spire_logo.eps}
-%         \includegraphics[height=0.1\paperwidth]{spire_logo_transparent.png}
-% %         \vspace{1pt}
-%       \end{column}
-% %       \begin{column}{.02\paperwidth}
-% %       \end{column}
-% %       \begin{column}{.07\paperwidth}
-% %       \end{column}
-%       \begin{column}{.8\paperwidth}
-%         \vskip4ex \hspace{-10mm}
-%         \setlength\lineskip{35pt}
-% %         \raggedleft
-%       \centering
-%         \usebeamercolor{title in headline}{\color{fg}\textbf{{\inserttitle}}\\[0.25ex]}
-%         \usebeamercolor{author in headline}{\color{fg}\textbf{{\insertauthor}}\\[0.25ex]}
-%         \usebeamercolor{institute in headline}{\color{fg}\textbf{{\insertinstitute}}\\[0ex]}
-% %         \vskip2ex
-%       \end{column}
-%       \begin{column}{.1\paperwidth}
-%       \raggedleft
-% %         \centering
-%         \vskip2.5ex
-% %         \includegraphics[height=0.1\paperwidth]{iisc.jpg}
-%          \includegraphics[height=0.1\paperwidth]{iisc_brown.png}
-% %         \vspace{1pt}
-%       \end{column}
-%       \begin{column}{.03\paperwidth}
-%       \end{column}
-%     \end{columns}
-%   \end{beamercolorbox}
-%  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line head}
-%     \rule{0pt}{10pt}
-%   \end{beamercolorbox}
-%   \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
-%     \rule{0pt}{2pt}
-%   \end{beamercolorbox}
-% }
-
 
   \begin{beamercolorbox}[wd=\paperwidth]{headline}
-   \vskip4ex
-   \setlength\lineskip{20pt}
-  \centering
-        \usebeamercolor{title in headline}{\color{fg}\textbf{{\inserttitle}}\\[0.25ex]}
-        \usebeamercolor{author in headline}{\color{fg}\textbf{{\insertauthor}}\\[0.25ex]}
-        \usebeamercolor{institute in headline}{\color{fg}\textbf{{\insertinstitute}}\\[0ex]}
-        \vspace{-0.1\paperheight}
-       \raggedright{ \hspace{0.01\paperwidth}
-   \includegraphics[height=0.1\paperheight]{spire_logo_transparent.png} 
-   \hspace{0.85\paperwidth} 
-% \hspace{70cm}
-%      \raggedleft{
-       \includegraphics[trim=0cm 0.6cm 0cm 0.1cm, clip=true, height=0.1\paperheight]{iisc_big.png}}
-        % \vskip6ex
-%   
-%     \begin{columns}[T]
-%           \begin{column}{.1\paperwidth}
-% %         \centering
-% 	  \raggedright 
-%         \vskip2ex
-%         \hspace{15mm}
-% %         \includegraphics[height=0.1\paperwidth]{spire_logo.eps}
-%         \includegraphics[height=0.1\paperwidth]{spire_logo_transparent.png}
-% %         \vspace{1pt}
-%       \end{column}
-% %       \begin{column}{.02\paperwidth}
-% %       \end{column}
-% %       \begin{column}{.07\paperwidth}
-% %       \end{column}
-%       \begin{column}{.8\paperwidth}
-%         \vskip4ex \hspace{-10mm}
-%         \setlength\lineskip{35pt}
-% %         \raggedleft
-%       \centering
-%         \usebeamercolor{title in headline}{\color{fg}\textbf{{\inserttitle}}\\[0.25ex]}
-%         \usebeamercolor{author in headline}{\color{fg}\textbf{{\insertauthor}}\\[0.25ex]}
-%         \usebeamercolor{institute in headline}{\color{fg}\textbf{{\insertinstitute}}\\[0ex]}
-% %         \vskip2ex
-%       \end{column}
-%       \begin{column}{.1\paperwidth}
-%       \raggedleft
-% %         \centering
-%         \vskip2.5ex
-% %         \includegraphics[height=0.1\paperwidth]{iisc.jpg}
-%          \includegraphics[height=0.1\paperwidth]{iisc_brown.png}
-% %         \vspace{1pt}
-%       \end{column}
-%       \begin{column}{.03\paperwidth}
-%       \end{column}
-%     \end{columns}
+
+    % === Three-column aligned header layout ===
+    \begin{tabular}{m{0.12\paperwidth} m{0.72\paperwidth} m{0.14\paperwidth}}
+
+      % ---------------- Left Logos ----------------
+      \raggedright
+      \hspace{0.01\paperwidth}
+      \includegraphics[height=0.075\paperheight]{POSTER/iisc_big.png}%
+      \hspace{0.01\paperwidth}%
+      \includegraphics[height=0.075\paperheight]{POSTER/spire_logo_transparent.png}%
+      &
+      % ---------------- Center Title Block ----------------
+      \centering
+      {\\[16mm]\usebeamercolor{title in headline}{\color{fg}\Large\textbf{\inserttitle}}}\\[-0.3em]
+      {\usebeamercolor{author in headline}{\color{fg}\normalsize\insertauthor}}\\[-0.3em]
+      {\usebeamercolor{institute in headline}{\color{fg}\normalsize\insertinstitute}}
+      &
+      % ---------------- Right Logo ----------------
+      \raggedleft
+      \includegraphics[height=0.06\paperheight]{POSTER/logos/asr2025_logo.png}
+
+    \end{tabular}
+
+    % \vspace{2ex}
+
   \end{beamercolorbox}
- \begin{beamercolorbox}[wd=\paperwidth]{upper separation line head}
-    \rule{0pt}{10pt}
-  \end{beamercolorbox}
+
   \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
-    \rule{0pt}{2pt}
+    \rule{0pt}{10pt}
   \end{beamercolorbox}
 }
 
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------------------------------
+% Footer with website (left) and email (right)
+% -------------------------------------------------------
 \setbeamertemplate{footline}{
   \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
-\rule{1pt}{0.005\textheight}
+    \rule{1pt}{0.005\textheight}
   \end{beamercolorbox}
   \leavevmode%
   \begin{beamercolorbox}[ht=4ex,leftskip=0cm,rightskip=0cm]{author in head/foot}%
-%     \vskip2ex
-    \usebeamercolor{website in footline}{\color{fg}\textbf{{ \footleft}}}
+    \usebeamercolor{website in footline}{\color{fg}\textbf{\footleft}}
     \hfill
-    \usebeamercolor{email in footline}{\color{fg}\textbf{{  \footright}}}
+    \usebeamercolor{email in footline}{\color{fg}\textbf{\footright}}
     \vskip0.5ex
   \end{beamercolorbox}
-%   \vskip0pt%
-%   \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
-%     \rule{0pt}{2pt}
-%   \end{beamercolorbox}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Display a grid to help align images ... and it looks nice with this color scheme
-%\beamertemplategridbackground[1cm]
-
+% End of beamerthemeLankton
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \Mode<all>

@@ -3,7 +3,8 @@
 
 \usepackage{amsmath,amsfonts,amssymb,pxfonts,xspace}
 \usepackage{graphicx,multirow}
-\usepackage[size=custom,width=120,height=90,scale=1.2]{beamerposter}
+\usepackage[size=custom,width=118.9,height=84.1,scale=1.0]{beamerposter}
+
 \usepackage[listings,theorems]{tcolorbox}
 \usepackage{setspace}
 \usepackage{color,xcolor}
@@ -17,13 +18,13 @@
 \definecolor{darkblue}{rgb}{0.1, 0.1, 0.44}
 \definecolor{lightgray}{rgb}{0.9, 0.9, 0.9}
 \definecolor{burntumber}{rgb}{0.54, 0.2, 0.14}
-\definecolor{sienna}{rgb}{0.53, 0.18, 0.09} 
+\definecolor{sienna}{rgb}{0.53, 0.18, 0.09}
 \definecolor{rosewood}{rgb}{0.4, 0.0, 0.04}
 \definecolor{burlywood}{rgb}{0.87, 0.72, 0.53}
 \definecolor{mahogany}{rgb}{0.75, 0.25, 0.0}
 
 \newcommand{\footleft}{\normalsize{\hspace{0.5em}https://spire.ee.iisc.ac.in/}}
-\newcommand{\footright}{\normalsize{amartyaveer72@gmail.com, saurabhk0317@gmail.com, prasantg@iisc.ac.in\hspace{0.5em}}}
+\newcommand{\footright}{\normalsize{saubkumarsk@gmail.com, sumitsharma@iisc.ac.in, prasanta@iisc.ac.in\hspace{0.5em}}}
 
 \usepackage{pifont}
 \newcommand{\starbullet}{\ding{72}}
@@ -34,353 +35,439 @@
 \newcommand{\xmark}{{\color{red!70!black}\ding{55}}}       % Cross ✘
 \newcommand{\info}{{\color{blue!70!black}\ding{72}}}       % Info ℹ
 
+% -------------------------------------------------------------------
+% TITLE / AUTHORS / AFFILIATIONS  (exactly as camera-ready)
+% -------------------------------------------------------------------
 
-\title{\Huge{\textbf{Improving Dialect Identification in Indian Languages Using Multimodal Features\\ from Dialect Informed ASR}}}
-\author{\Large{Amartyaveer*, Saurabh Kumar*, Sumit Sharma*, Sathvik Udupa, Sandhya Badiger, Abhayjeet Singh, Deekshitha G,\\ Jesuraja Bandekar, Savitha Murthy, Prasanta Kumar Ghosh}}
-\institute{\Large{Department of Electrical Engineering, Indian Institute of Science, Bengaluru -- 560012, India}}
+\title{\Huge\bfseries
+MADASR 2.0: Multi-Lingual Multi-Dialect ASR Challenge in 8 Indian Languages
+}
 
+\author{\large
+Saurabh Kumar\textsuperscript{1},
+Sumit Sharma\textsuperscript{1},
+Deekshitha G\textsuperscript{1},
+Abhayjeet Singh\textsuperscript{1},
+Amartyaveer\textsuperscript{1},
+Sathvik Udupa\textsuperscript{1},
+Sandhya Badiger\textsuperscript{1},\\[0.2em]
+Sanjeev Khudanpur\textsuperscript{2},
+Sunayana Sitaram\textsuperscript{3},
+S. Umesh\textsuperscript{4},
+Bhuvana Ramabhadran\textsuperscript{5},
+Brian Kingsbury\textsuperscript{6},\\[0.2em]
+Hema A. Murthy\textsuperscript{4},
+Srikanth S. Narayanan\textsuperscript{7},
+Howard Lakougna\textsuperscript{8},
+Prasanta Kumar Ghosh\textsuperscript{1}
+}
+
+\institute{\small
+\textsuperscript{1}Indian Institute of Science (IISc), Bengaluru, India \quad
+\textsuperscript{2}Johns Hopkins University, USA \quad
+\textsuperscript{3}Microsoft Research, India\\[0.2em]
+\textsuperscript{4}Indian Institute of Technology Madras (IITM), India \quad
+\textsuperscript{5}Google DeepMind, USA \quad
+\textsuperscript{6}IBM Research, USA\\[0.2em]
+\textsuperscript{7}University of Southern California (USC), USA \quad
+\textsuperscript{8}Gates Foundation, USA
+}
+
+% -------------------------------------------------------------------
 \begin{document}
 \begin{frame}{}
 
 \vspace{-1em}
-\begin{columns}[t]
 
-    % ---------- Left Column: Dataset ----------
-    \column{0.49\textwidth}
-    \begin{block}{\Large\textbf{Dataset}}
-    \begin{columns}%[onlytextwidth]
-
-        % ---- 70% width: Map ----
-        \begin{column}{0.69\textwidth}
-        \vspace{0pt}
-        \centering
-        \includegraphics[width=\linewidth]{presentation/Images/poster_dialect_map2.png}
-        \vspace{0.4em}
-        {\small District-wise distribution of 8 Indian languages (left) and 5 Bengali dialects (right) used in this work.}
-        \end{column}
-
-        % ---- 30% width: Dataset Info ----
-        \begin{column}{0.29\textwidth}
-        \vspace{0pt}
-        A curated subset of the RESPIN Corpus -- a multi-dialect read-speech dataset developed for ASR and DID.\\
-        \textbf{(\href{https://respin.iisc.ac.in/}{\texttt{respin.iisc.ac.in}})}
-
-        \vspace{0.4em}
-        \textbf{\textcolor{darkblue}{Languages (8):}} Bengali, Bhojpuri,\\ Chhattisgarhi, Kannada, Magahi,\\ Maithili, Marathi, Telugu
-
-        \vspace{0.4em}
-        \textbf{\textcolor{darkblue}{Dialect Coverage:}} 33 dialects\\ across 8 Indian languages
-
-        \vspace{0.4em}
-        \textbf{\textcolor{darkblue}{Split per language:}}
-        \begin{itemize}\setlength\itemsep{0.3em}
-            \item Train: 140–175h ({\small 1000-1700 speakers \& 17k-19k sentences})
-            \item Dev: \ensuremath{\sim} 2h ({\small 60-100 speakers \& 500-700 sentences})
-            \item Test: 6–8h ({\small 120-200 speakers \& 1300-2000 sentences})
-        \end{itemize}
-
-        \vspace{0.4em}
-        \textbf{\textcolor{darkblue}{Note:}} No speaker/sentence overlap across dialects.
-        \end{column}
-    \end{columns}
-    \end{block}
-
-    % ---------- Right Column: Proposed Method ----------
-    \column{0.49\textwidth}
-    \begin{block}{\Large\textbf{Proposed Method}}
-    \begin{columns} %[onlytextwidth]
-
-        % ---- 70% width: Diagram ----
-        \begin{column}{0.65\textwidth}
-        \vspace{0pt}
-        \centering
-        \includegraphics[width=\linewidth]{presentation/Images/model_poster.png}
-        \vspace{0.4em}
-        {\small Block diagram of the proposed architecture.}
-        \end{column}
-        
-        % ---- 30% width: Method Info ----
-        \begin{column}{0.34\textwidth}
-        \vspace{0pt}
-        \textbf{\textcolor{darkblue}{Multimodal Architecture:}}
-        \begin{itemize}\setlength\itemsep{0.3em}
-            \item \textbf{ASR Block:} IndicWav2Vec + Conformer encoder
-            \item \textbf{DID Block:} RoBERTa\textsuperscript{4} on ASR hypothesis and CTC logits
-        \end{itemize}
-        
-        \vspace{0.4em}
-        \textbf{\textcolor{darkblue}{Objective Function:}}
-        \[
-        L = \lambda_{\text{CTC}} L_{\text{CTC}} + (1 - \lambda_{\text{CTC}}) L_{\text{ATT}} + \gamma_{\text{CE}} L_{\text{CE}}
-        \]
-        
-        \vspace{0.4em}
-        \textbf{\textcolor{darkblue}{Key Insight:}} Jointly models speech and text cues for dialect prediction.
-        
-        \vspace{0.4em}
-        \textbf{\textcolor{darkblue}{Training Details:}}
-        \begin{itemize}\setlength\itemsep{0.3em}
-            \item Joint training of ASR and DID modules.
-            \item \textbf{Conformer:} 8 blocks, 4 heads, 256-dim; \textbf{Transformer decoder:} 6 layers, 8 heads
-            \item Loss weights: $\lambda_{\text{CTC}} = 0.5$, $\gamma_{\text{CE}} = 6$
-            \item ASR-generated text used as input to \textbf{ROB Block}.
-        \end{itemize}
-        \end{column}
-
-    \end{columns}
-    % \end{minipage}
-    \end{block}
-
-\end{columns}
-
-\vspace{-0.5em}
-
-% ------------------ 3-COLUMN CONTENT BLOCK ------------------
 \begin{columns}[t,totalwidth=\textwidth]
 
-% ---------- First Column ----------
-\begin{column}{0.25\textwidth}
+% ======================================================
+% LEFT COLUMN: Intro + Baselines + Leaderboard
+% ======================================================
+\column{0.32\textwidth}
 
-% ---------- INTRODUCTION ----------
-\begin{block}{\Large\textbf{Introduction}}
+% ---------------- Introduction & Motivation ----------------
+\begin{block}{\Large\textbf{Introduction \& Motivation}}
+\vspace{0.3em}
 
-\begin{minipage}{\linewidth}
-\textbf{\textcolor{darkblue}{Why Dialect Identification?}}
-\begin{itemize}\setlength\itemsep{0.2em}
-    \item India has hundreds of dialects, but limited DID research.
-    \item DID enhances ASR personalization in multi-dialect regions.
+\textbf{\textcolor{darkblue}{Why MADASR 2.0?}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item India has $100+$ spoken languages, 22 scheduled languages, and hundreds of dialects with rich phonological and lexical variation.
+    \item Robust ASR for low-resource Indian languages remains difficult, even with SSL and large multilingual models.
+    \item Real-world deployments must handle dialectal variation, mixed registers, and domain mismatch (read vs.\ spontaneous speech).
 \end{itemize}
-\end{minipage}
 
-\vspace{0.6em}
+\vspace{0.4em}
 
-\begin{minipage}{\linewidth}
-\textbf{\textcolor{darkblue}{Challenges}}
-\begin{itemize}\setlength\itemsep{0.2em}
-    \item DID is harder than Language Identification (LID).
-    \item Dialects share phonetic, lexical, and syntactic traits\textsuperscript{1}.
-    \item Scarcity of annotated dialectal datasets.
+\textbf{\textcolor{darkblue}{From MADASR 1.0 to 2.0}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item \textbf{MADASR 1.0} (ASRU 2023): monolingual dialectal ASR for Bengali \& Bhojpuri read speech.
+    \item \textbf{MADASR 2.0} (ASRU 2025): \textbf{8 languages}, \textbf{33 dialects}, train on read speech, test on \textbf{read} and \textbf{spontaneous} speech.
 \end{itemize}
-\end{minipage}
 
-\vspace{0.6em}
+\vspace{0.4em}
 
-\begin{minipage}{\linewidth}
-\textbf{\textcolor{darkblue}{Limitations of Prior Work}}
-\begin{itemize}\setlength\itemsep{0.2em}
-    \item Text-only models lack acoustic/prosodic information.
-    \item Audio-only models miss rich linguistic structure\textsuperscript{2}.
-    \item ASR-based models underutilize both modalities\textsuperscript{3}.
+\textbf{\textcolor{darkblue}{Goals}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item Provide a \textbf{standardised benchmark} for multilingual, multi-dialect ASR in Indian languages.
+    \item Study \textbf{dialect robustness} and generalisation across domains and speech styles.
+    \item Encourage \textbf{multitask} and \textbf{dialect-aware} modelling with ASR, LID, and DID.
 \end{itemize}
-\end{minipage}
 
-\vspace{0.6em}
+\vspace{0.4em}
 
-\begin{minipage}{\linewidth}
-\textbf{\textcolor{darkblue}{Our Contributions}}
-\begin{itemize}\setlength\itemsep{0.2em}
-    \item First large-scale dialect identification (DID) study across 8 Indian languages and 33 dialects.
-    \item Multimodal architecture combining speech and ASR-text.
-    \item IndicWav2Vec layer analysis for dialect-sensitive features.
+\textbf{\textcolor{darkblue}{Main Contributions}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item MADASR 2.0 subset of \textbf{RESPIN}: $\sim$1,240 h of labelled read speech across 8 languages and 33 dialects.
+    \item \textbf{Four tracks} spanning constrained/unconstrained settings and 30 h vs.\ 150 h per language.
+    \item Open-source \textbf{ESPnet baselines}, scoring scripts, and public leaderboards for read and spontaneous speech.
 \end{itemize}
-\end{minipage}
 
 \end{block}
 
-\begin{block}{\footnotesize \textbf{Acknowledgement}}
-{\footnotesize
-\begin{itemize}\setlength\itemsep{0.2em}
-    \item Supported by the RESPIN project (Bill \& Melinda Gates Foundation).
-    \item Special thanks to the b, Navana Tech, and IISc Bengaluru.
+\vspace{0.4em}
+
+% ---------------- Baseline Systems ----------------
+\begin{block}{\Large\textbf{Baseline Systems \& Observations}}
+\vspace{0.3em}
+
+\textbf{\textcolor{darkblue}{ESPnet Conformer Baselines}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item Hybrid CTC/Attention ASR in ESPnet with \textbf{Conformer} encoder and \textbf{Transformer} decoder.
+    \item Tracks 1 \& 2: supervised training on 30 h and 150 h RESPIN subsets.
+    \item Tracks 3 \& 4: same subsets with encoder initialised using frozen \textbf{IndicWav2Vec} SSL features.
+    \item Recipes and pretrained checkpoints released on GitHub \& Hugging Face.
 \end{itemize}
-}
-\end{block}
 
-\vspace{-0.5em}
-% ---------- REFERENCES AND QR CODE ----------
-\begin{block}{\footnotesize \textbf{References AND QR Code}}
-
-\begin{columns}
-    \vspace{-0.5em}
-    % ---- Left: References ----
-    \begin{column}{0.75\textwidth}
-    \vspace{0pt}  % This forces top alignment
-    {\scriptsize
-    \begin{itemize}\setlength\itemsep{0.2em}
-        \item [1.] Udupa et al., ”Gated Multi Encoders and Multitask Objectives for Dialectal Speech Recognition in Indian Languages,” In Proc. ASRU, 2023.
-        \item [2.] Desplanques et al., “ECAPA-TDNN: Emphasized Channel Attention, Propagation
-and Aggregation in TDNN-Based Speaker Verification,” Interspeech, 2020.
-        \item [3.] Lonergan et al., “Low-resource speech recognition and dialect identification of Irish
-in a multi-task framework,” Odyssey, 2024.
-        \item [4.] Liu et al., “RoBERTa: A Robustly Optimized BERT Pretraining Approach,” ArXiv, 2019.
-    \end{itemize}
-    }
-    \vspace{0.8em}
-    \end{column}
-
-    % ---- Right: QR Code ----
-    \begin{column}{0.24\textwidth}
-    \vspace{0pt}  % This forces top alignment
-    \centering
-    \includegraphics[width=0.95\linewidth]{presentation/Images/qrcode.png}
-    \vspace{0.3em}
-    {\small (Full paper)}
-    \end{column}
-\end{columns}
-
-\end{block}
-
-\end{column}
-
-% Second Column
-\begin{column}{0.28\textwidth}
-\begin{block}{\Large\textbf{Results – DID Performance}}
-
-% ---------- Accuracy Table + Observations ----------
-        \centering
-        \resizebox{\textwidth}{!}{%
-        \begin{tabular}{llccccccccc}
-            \toprule
-            \textbf{Type} & \textbf{Method} & \textbf{bh} & \textbf{bn} & \textbf{ch} & \textbf{kn} & \textbf{mg} & \textbf{mr} & \textbf{mt} & \textbf{te} & \textbf{Avg} \\
-            \midrule
-        
-            \multirow{1}{*}{Text} 
-            & ROB & 72.52 & 63.16 & 74.70 & 71.96 & \textbf{87.22} & 76.82 & \textbf{87.77} & 65.00 & 74.89 \\
-            
-            \midrule
-        
-            \multirow{4}{*}{Audio} 
-            & CON        & 45.20 & 51.17 & 49.31 & 60.10 & 67.21 & 60.74 & 59.92 & 57.46 & 56.39 \\
-            & ETD        & 49.96 & 52.55 & 56.78 & 58.52 & 71.04 & 61.87 & 62.96 & 60.11 & 59.22 \\
-            & SSL-ETD    & 63.85 & 65.32 & 67.87 & 72.80 & 78.94 & 74.72 & 75.10 & 72.30 & 71.36 \\
-            & SSL-CON    & 65.27 & 67.86 & 69.35 & 73.40 & 80.05 & 73.11 & 73.42 & 74.37 & 72.10 \\
-        
-            \midrule
-        
-            \multirow{2}{*}{ASR} 
-            & SSL-ASR     & 72.30 & 73.08 & 75.91 & 78.46 & 85.53 & 79.52 & 80.21 & 76.24 & 77.66 \\
-            & SSL-ASR-ROB & \textbf{75.56} & \textbf{73.65} & \textbf{76.76} & \textbf{81.49} & 86.79 & \textbf{81.73} & 83.81 & \textbf{78.68} & \textbf{79.81} \\
-        
-            \bottomrule
-        \end{tabular}
-        }
-
-    \vspace{0.4em}
-
-    \begin{itemize}\setlength\itemsep{0.2em}
-        \item ROB excels on Magahi and Maithili.
-        \item SSL-audio methods outperform CON and ETD.
-        \item SSL-ASR best among existing audio/text (\textbf{77.66\%}).
-        \item SSL-ASR-ROB (proposed) highest overall: \textbf{79.81\%}.
-    \end{itemize}
-
-\vspace{0.8em}
-
-% ---------- Layer Plot + Findings ----------
-    % \centering
-    \includegraphics[width=0.95\linewidth]{presentation/Images/layer_plot}
-    \vspace{0.3em}
-    \begin{itemize}\setlength\itemsep{0.2em}
-        \item Mid-to-late layer outputs outperform others.
-        \item Layers 7–11 capture best dialectal cues.
-        \item Weighted sum of outputs of layers 7–11 achieves \textbf{72.16\%}.
-    \end{itemize}
-% \end{columns}
-
-\end{block}
-\end{column}
-
-
-% Third Column
-\begin{column}{0.45\textwidth}
-
-\begin{block}{\Large\textbf{Results - Confusion Matrix}}
-\vspace{-0.8em}
-\begin{columns}[t]
-
-% ---------- Left: Image ----------
-\begin{column}{0.7\textwidth}
-\vspace{0pt}  % This forces top alignment
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Dev-Set Performance (Overall)}}
 \centering
-\includegraphics[width=\linewidth]{presentation/Images/cm_did}
-\end{column}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Track} & \textbf{CER} & \textbf{WER} & \textbf{LID Acc.} \\
+\midrule
+1 (30 h, const.)  & 4.06 & 17.28 & 97.41 \\
+2 (150 h, const.) & \textbf{3.61} & \textbf{15.72} & 96.58 \\
+3 (30 h + SSL)    & 4.36 & 18.45 & 96.92 \\
+4 (150 h + SSL)   & 3.89 & 16.74 & 96.18 \\
+\bottomrule
+\end{tabular}
 
-% ---------- Right: Highlights ----------
-\begin{column}{0.29\textwidth}
-\vspace{0pt}  % This forces top alignment
-\begin{itemize}\setlength\itemsep{0.6em}
-    \item \textbf{\textcolor{darkblue}{Overall:}} High accuracy across most dialects.
-    \item \textbf{\textcolor{darkblue}{Best:}} \textit{mg D4} (97.7\%), \textit{mr D1} (96.9\%).
-    \item \textbf{\textcolor{darkblue}{Lower:}} \textit{mr D2} (53.2\%), \textit{ch D2} (66.6\%) — likely due to overlapping phonetic features and limited distinctiveness.
+\vspace{0.4em}
+\raggedright
+\textbf{\textcolor{darkblue}{Insights}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item \textbf{Scale helps:} Track 2 (150 h) achieves the lowest CER/WER.
+    \item Frozen SSL features are competitive but not consistently better than fully supervised training.
+    \item Kannada and Telugu show relatively higher WER, especially on spontaneous speech.
 \end{itemize}
-\end{column}
-\end{columns}
+
 \end{block}
 
-\begin{block}{\Large\textbf{Results - ASR Performance}}
-    % ---------- Left Column: Table (70%) ----------
-    \vspace{-0.8em}
-    \begin{columns}
-    \begin{column}{0.54\textwidth}
-    \vspace{0pt}  % This forces top alignment
-    \centering
-    \renewcommand{\arraystretch}{1.2}
-    \begin{table}[h!]
-    \resizebox{\textwidth}{!}{%
-    \begin{tabular}{lccccccccc}
-        \toprule
-        \textbf{Method} & \textbf{bh} & \textbf{bn} & \textbf{ch} & \textbf{kn} & \textbf{mg} & \textbf{mr} & \textbf{mt} & \textbf{te} & \textbf{Avg} \\
-        \midrule
-        SSL-ASR     & 4.96 & 4.63 & 3.81 & 4.83 & 6.89 & 3.60 & 5.69 & 4.17 & \textbf{4.82} \\
-        SSL-ASR-ROB & 4.88 & 4.90 & 4.06 & 5.04 & 6.98 & 3.55 & 5.80 & 4.38 & \textbf{4.95} \\
-        \bottomrule
-    \end{tabular}
-    }
-    \end{table}
-    \end{column}
+\vspace{0.4em}
 
-    % ---------- Right Column: Key Observations (30%) ----------
-    \begin{column}{0.46\textwidth}
-    \vspace{0pt}  % This forces top alignment
-    \begin{itemize} \setlength\itemsep{0.4em}
-        \item SSL-ASR achieves the best average CER: \textbf{4.82\%}.
-        \item SSL-ASR-ROB shows a slight increase: \textbf{4.95\%}.
-        \item Minor CER increase due to dialect supervision.
-    \end{itemize}
-    \end{column}
-    \end{columns}
+% ---------------- Leaderboard Highlights ----------------
+\begin{block}{\Large\textbf{Leaderboard Highlights}}
+\vspace{0.3em}
+
+\textbf{\textcolor{darkblue}{Read Speech (Test-read)}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item Best CERs range from \textbf{4.30–4.98\%} across tracks.
+    \item \textbf{Track 2} (150 h, constrained) achieves the strongest ASR: baseline and SPRING Lab around \textbf{4.3–4.4\%} CER.
+    \item SPRING Lab attains top DID accuracy (up to \textbf{75.4\%}) while maintaining low CER.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Spontaneous Speech (Test-spontaneous)}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item CERs rise sharply to \textbf{23–68\%}, indicating severe domain mismatch.
+    \item Pramiteeh and baseline systems lead with CER $\approx$\textbf{24–26\%} across tracks.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Language-wise Behaviour}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item Bhojpuri, Bengali, and Maithili generally achieve lower CER.
+    \item Kannada, Magahi, and Telugu show higher CER, especially for spontaneous speech.
+\end{itemize}
+
 \end{block}
 
-\vspace{-0.4em}
-\begin{block}{\Large\textbf{Conclusions and Future Works}}
+% ======================================================
+% MIDDLE COLUMN: Dataset + Portal + Key Takeaways
+% ======================================================
+\column{0.34\textwidth}
+
+% ---------------- Dataset Block ----------------
+\begin{block}{\Large\textbf{Dataset: RESPIN Subset for MADASR 2.0}}
+\vspace{0.3em}
+
 \begin{columns}[t]
-\begin{column}{0.54\textwidth}
-\vspace{0pt}  % This forces top alignment
-% ------------------ CONCLUSIONS ------------------
-\textbf{\textcolor{darkblue}{Key Findings:}}
-\begin{itemize}\setlength\itemsep{0.5em}
-    \item Multimodal DID architecture combining speech and text cues improves dialect identification in Indian languages.
-    \item A slight trade-off is observed between DID accuracy and ASR performance.
-\end{itemize}
+\begin{column}{0.56\textwidth}
+\centering
+\includegraphics[width=\linewidth]{presentation/Images/madasr_lang_map.pdf}
+\vspace{0.4em}
 
-\vspace{0.8em}
-
-
+{\small
+Geographic coverage of RESPIN languages and district-level dialects.
+}
 \end{column}
-
-\begin{column}{0.45\textwidth}
-\vspace{0pt}  % This forces top alignment
-\textbf{\textcolor{darkblue}{Future Work:}}
-\begin{itemize}\setlength\itemsep{0.5em}
-    \item Address dialectal overlap and mitigate ASR degradation.
-    \item Explore end-to-end multimodal modelling alternatives.
+\begin{column}{0.42\textwidth}
+\small
+\textbf{\textcolor{darkblue}{Languages (8):}}
+\begin{itemize}\setlength\itemsep{0.15em}
+    \item Bengali (bn), Bhojpuri (bh)
+    \item Chhattisgarhi (ch), Kannada (kn)
+    \item Magahi (mg), Maithili (mt)
+    \item Marathi (mr), Telugu (te)
 \end{itemize}
+
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Dialect Labels}}
+\begin{itemize}\setlength\itemsep{0.15em}
+    \item Fine-grained \textbf{district-level} DID tags.
+    \item Total: \textbf{33 dialects} across 8 languages.
+\end{itemize}
+\end{column}
+\end{columns}
+
+\vspace{0.4em}
+\small
+\textbf{\textcolor{darkblue}{Subsets and Scale}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item \textbf{Train-small} (Tracks 1 \& 3): $\approx$30 h / language, \textbf{241.1 h}, 146{,}760 utts, 9{,}387 spkrs.
+    \item \textbf{Train-large} (Tracks 2 \& 4): $\approx$150 h / language, \textbf{1{,}239.5 h}, 733{,}800 utts, 11{,}315 spkrs.
+    \item \textbf{Dev (read):} 17.6 h, 11{,}507 utts, 660 spkrs.
+    \item \textbf{Test-read:} 26.7 h, 17{,}550 utts, 1{,}320 spkrs.
+    \item \textbf{Test-spontaneous:} 7.0 h, 5{,}400 utts, 5{,}400 spkrs.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Annotation}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Each utterance: LID, DID, speaker ID, transcript, duration.
+    \item Transcripts in native scripts; numbers written out, English transliterated.
+    \item No further text normalisation $\Rightarrow$ orthographic dialectal variation preserved.
+\end{itemize}
+
+\end{block}
+
+\vspace{0.4em}
+
+% ---------------- Portal & Evaluation ----------------
+\begin{block}{\Large\textbf{Challenge Setup, Portal \& Evaluation}}
+\vspace{0.3em}
+
+\textbf{\textcolor{darkblue}{Web Portal}}
+\begin{itemize}\setlength\itemsep{0.25em}
+    \item React-based portal with team registration and password-protected submission.
+    \item Backend API parses TSVs, runs scoring scripts, and updates public leaderboards.
+\end{itemize}
+
+\vspace{0.4em}
+\textbf{\textcolor{darkblue}{Timeline (AoE)}}
+\centering
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Registration opens        & April 10, 2025 \\
+Train + Dev release       & April 19, 2025 \\
+Baseline systems release  & April 22, 2025 \\
+Test set release          & May 25, 2025 \\
+Submission portal opens   & May 31, 2025 \\
+Final submission deadline & June 21, 2025 \\
+Leaderboard results       & June 22, 2025 \\
+Challenge paper deadline  & June 25, 2025 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\raggedright
+\textbf{\textcolor{darkblue}{Scoring Protocol}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item \textbf{ASR:} CER and WER via \texttt{jiwer}. LID/DID tokens stripped; a small set of invalid utts excluded.
+    \item Punctuation removed from hypotheses; no further normalisation.
+    \item \textbf{LID/DID:} utterance-level accuracy; exact token match required.
+\end{itemize}
+
+\end{block}
+
+\vspace{0.4em}
+
+% ---------------- Key Takeaways ----------------
+\begin{block}{\Large\textbf{Key Takeaways}}
+\vspace{0.3em}
+
+\textbf{\textcolor{darkblue}{1. In-domain Supervision is Crucial}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Track 2 (150 h, constrained) consistently outperforms Track 1 (30 h) in CER/WER.
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{\textcolor{darkblue}{2. SSL Features Need Careful Use}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Frozen IndicWav2Vec features (Tracks 3 \& 4) are competitive but not consistently superior to supervised training.
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{\textcolor{darkblue}{3. Domain Mismatch is Hard}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Spontaneous speech is much harder than read speech for all systems, highlighting the need for domain adaptation.
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{\textcolor{darkblue}{4. Multitask \& Dialect-aware Modelling Helps}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Multitask models (ASR + LID + DID + demographics) can improve auxiliary tasks with modest ASR degradation.
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{\textcolor{darkblue}{5. MADASR 2.0 as a Benchmark}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Provides a public, dialect-rich benchmark with standardised protocols and strong baselines for Indian-language ASR.
+\end{itemize}
+
+\end{block}
+
+% ======================================================
+% RIGHT COLUMN: Tracks/Tasks + Participation + Conclusion/Links
+% ======================================================
+\column{0.32\textwidth}
+
+% ---------------- Challenge Design ----------------
+\begin{block}{\Large\textbf{Challenge Design: Tracks \& Tasks}}
+\vspace{0.3em}
+
+\textbf{\textcolor{darkblue}{Tracks}}
+\centering
+\small
+\begin{tabular}{@{}llcc@{}}
+\toprule
+\textbf{Track} & \textbf{Setting} & \textbf{Train} & \textbf{External} \\
+\midrule
+1 & Constrained, low  & 30 h/lang  & No  \\
+2 & Constrained, high & 150 h/lang & No  \\
+3 & Unconstr., low    & 30 h/lang  & Yes \\
+4 & Unconstr., high   & 150 h/lang & Yes \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+\raggedright
+\textbf{\textcolor{darkblue}{Primary Task: ASR}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Multilingual, multidialect ASR across 8 languages.
+    \item Evaluation on \textbf{read} and \textbf{spontaneous} test sets.
+    \item Metrics: \textbf{CER} and \textbf{WER} (using \texttt{jiwer}).
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{\textcolor{darkblue}{Auxiliary Tasks}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item \textbf{LID:} language ID (e.g., [bn]).
+    \item \textbf{DID:} dialect ID (e.g., [bn\_D3]).
+    \item Metric: utterance-level accuracy.
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{\textcolor{darkblue}{Submission Format (TSV)}}
+\small
+\begin{itemize}\setlength\itemsep{0.15em}
+    \item \textbf{ASR only:} \texttt{utt\_id \quad transcription}
+    \item \textbf{ASR + LID:} \texttt{utt\_id \quad transcription \quad [bh]}
+    \item \textbf{ASR + LID + DID:} \texttt{utt\_id \quad transcription \quad [bh D1]}
+\end{itemize}
+
+\end{block}
+
+\vspace{0.4em}
+
+% ---------------- Participation & Systems ----------------
+\begin{block}{\Large\textbf{Participation \& Submitted Systems}}
+\vspace{0.3em}
+
+\textbf{\textcolor{darkblue}{Participation}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item \textbf{171} dataset downloads from \textbf{28} countries.
+    \item \textbf{80} registered teams from \textbf{8} countries.
+    \item \textbf{306} submissions; \textbf{191} valid for ranking.
+    \item \textbf{7} teams submitted at least one valid final system.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Representative Approaches}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item \textbf{Team YS:} fine-tuned \textbf{Whisper-large-v3} with \textbf{MixLoRA} (LoRA-based mixture-of-experts).
+    \item \textbf{SPRING Lab:} Common Label Set (CLS) via G2P-based mapping and dual decoders (CLS \& native script).
+    \item \textbf{QWER:} voice conversion, mixed-speech augmentation, LID tokens, and error-aware fine-tuning (upsampling high-error dialects).
+    \item \textbf{Pramiteeh:} multitask model for ASR, LID, DID, gender, and age with shared encoder and language-specific ASR decoders.
+\end{itemize}
+
+\end{block}
+
+\vspace{0.4em}
+
+% ---------------- Conclusion ----------------
+\begin{block}{\Large\textbf{Conclusion \& Future Directions}}
+\vspace{0.3em}
+
+\textbf{\textcolor{darkblue}{Summary}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item MADASR 2.0 evaluates multilingual, multidialect ASR across 8 Indian languages and 33 dialects using RESPIN.
+    \item Four tracks, two test conditions (read \& spontaneous), and optional LID/DID enable systematic study of robustness and generalisation.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Future Work}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Better modelling of spontaneous conversational speech, including disfluencies and code-switching.
+    \item End-to-end dialect-aware models that jointly handle ASR, LID, DID, and domain adaptation.
+    \item Parameter-efficient adaptation schemes for dialect and style shifts.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{\textcolor{darkblue}{Acknowledgements}}
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item Supported by the \textbf{RESPIN} project, funded by the Gates Foundation.
+    \item We thank the RESPIN team, Navana Tech, and all MADASR 2.0 participants.
+\end{itemize}
+
+\end{block}
+
+\vspace{0.3em}
+
+% ---------------- Links & References ----------------
+\begin{block}{\footnotesize\textbf{Links \& References}}
+\begin{columns}[t]
+\begin{column}{0.60\textwidth}
+\scriptsize
+\textbf{\textcolor{darkblue}{Key Links}}
+\begin{itemize}\setlength\itemsep{0.15em}
+    \item Challenge: \texttt{https://sites.google.com/view/respinasrchallenge2025}
+    \item RESPIN corpus: \texttt{https://respin.iisc.ac.in}
+    \item Baseline ESPnet recipes and models: GitHub \& Hugging Face
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{\textcolor{darkblue}{Selected References}}
+\begin{itemize}\setlength\itemsep{0.15em}
+    \item Baevski et al., wav2vec 2.0, NeurIPS 2020.
+    \item Radford et al., Whisper, 2022.
+    \item Diwan et al., MUCS 2021, Interspeech 2021.
+    \item Amartyaveer et al., ICASSP 2025 (RESPIN DID).
+    \item Kumar et al., Interspeech 2025 (ASR–DID fusion).
+    \item RESPIN corpus \& MADASR 2.0 challenge website (camera-ready paper).
+\end{itemize}
+\end{column}
+\begin{column}{0.40\textwidth}
+\centering
+\includegraphics[width=0.95\linewidth]{presentation/Images/madasr_qrcode.pdf}\\[0.3em]
+{\scriptsize (Challenge website / paper)}
 \end{column}
 \end{columns}
 \end{block}
 
-
-\end{column}
 \end{columns}
 
 \end{frame}
